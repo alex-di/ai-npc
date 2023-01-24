@@ -1,4 +1,5 @@
 import { Configuration, OpenAIApi } from "openai";
+import characters from '../../data/chars.json';
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -15,11 +16,21 @@ export default async function (req, res) {
     return;
   }
 
-  const animal = req.body.animal || '';
-  if (animal.trim().length === 0) {
+  const { id }= req.query;
+
+  if (!id) {
+    throw new Error('Character ID is empty')
+  }
+
+  const history = ''
+
+
+  const char = characters.find(({ id: charId }) =>  charId === id);
+  const prompt = req.body.prompt || '';
+  if (prompt.trim().length === 0) {
     res.status(400).json({
       error: {
-        message: "Please enter a valid animal",
+        message: "Please enter a valid prompt",
       }
     });
     return;
@@ -28,7 +39,7 @@ export default async function (req, res) {
   try {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: generatePrompt(animal),
+      prompt: generatePrompt(char, history, prompt),
       stop: [' character:', ' player:', '###'],
       temperature: 0.9,
       presence_penalty: 0.6,
@@ -55,10 +66,12 @@ export default async function (req, res) {
   }
 }
 
-function generatePrompt(input) {
-  return `The following is a conversation with a character. The character is helpful, creative, clever, and very friendly.
-  The character has strong family bonds with player. The character has good knowledge of the multi-level city named Anterra. 
-  Character is informed that top levels of anterra are available through the mountain pass used by smugglers
-  
+function generatePrompt(character, chatHistory, input) {
+  return `You are NPC character named ${character.name}
+  ${character.bio}
+
+  The following is a conversation with a character. 
+
+  ${chatHistory}
   player: ${input}.`;
 }
