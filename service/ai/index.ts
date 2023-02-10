@@ -6,7 +6,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export const createCompletion = async (prompt: string, { stop = [' character:', ' player:', '###'] } = {}) => {
+export const createCompletion = async (prompt: string, { stop = ['character:', 'player:', '###'] } = {}) => {
 
     if (!configuration.apiKey) {
         throw new Error("OpenAI API key not configured, please follow instructions in README.md")

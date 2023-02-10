@@ -8,7 +8,8 @@ const historySchema = new Schema({
   prompt:  {type: String, required: true}, // String is shorthand for {type: String}
   reply:  {type: String, required: true},
   tags: [{ type: String }],
-  replyOptions: [{ type: String }]
+  replyOptions: [{ type: String }],
+  rawQuery:  {type: String, required: true},
 }, { timestamps: true });
 
 export const History = mongoose.models.History || mongoose.model('History', historySchema);
