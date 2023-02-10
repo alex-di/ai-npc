@@ -5,8 +5,7 @@ const schema = Joi.object<IConfig>({
     PORT: Joi.string()
         .alphanum()
         .min(3)
-        .max(25555)
-        .required(),
+        .max(25555),
 
     MONGODB_URI: Joi.string().required(),
     OPENAI_API_KEY: Joi.string().required(),
@@ -32,7 +31,7 @@ function createConfig() {
 }
 
 export interface IConfig {
-    PORT: number;
+    PORT?: number;
     MONGODB_URI: string;
     OPENAI_API_KEY: string;
 }
