@@ -30,11 +30,13 @@ async function dbConnect() {
 
   if (!cached.promise) {
     const opts = {
-      bufferCommands: false,
-      useUnifiedTopology: true,
+      // bufferCommands: false,
+      // useUnifiedTopology: true,
     }
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+
+      console.log('mongoose connected')
       return mongoose
     })
   }
