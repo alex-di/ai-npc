@@ -29,7 +29,7 @@ export const askCharacter = async ({ characterId, playerId, prompt, tags }) => {
 
   await fetcher(`/api/characters/${characterId}`, {
       method: 'POST',
-      body: JSON.stringify({prompt, tags, playerId }),
+      body: {prompt, tags, playerId },
   })
 
   mutate(`/api/characters/${characterId}/history?playerId=${playerId}`) // Update the local data without a revalidation
