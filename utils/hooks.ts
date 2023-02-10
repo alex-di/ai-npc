@@ -1,9 +1,9 @@
 import useSWR, { mutate } from 'swr';
 
-export const fetcher = async (url: string, { headers = {}, method = 'GET', body } = {}) => {
+export const fetcher = async (url: string, { headers = {}, method = 'GET', body = {} } = {}) => {
     return fetch(url, {
       method,
-      body,
+      body: JSON.stringify(body),
       headers: {
         ...headers, 
         'content-type': 'application/json',

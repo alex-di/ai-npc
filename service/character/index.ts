@@ -17,6 +17,7 @@ export const getCharacters = (): ICharacter[] => {
 }
 
 export const getHistory = async ({ playerId, characterId }: {playerId: string, characterId: string}) => {
+    // @ts-ignore
     return await History.find({characterId, playerId } ).limit(100).sort({ createdAt: -1 });
 }
 export const saveHistory = async (input: Omit<IHistory, '_id'>) => {

@@ -1,15 +1,15 @@
+import React from 'react';
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styles from "../index.module.css";
-import { Box, Container, CardMedia, Card, CardActionArea, CardContent, Typography, CircularProgress, Stack, ListItem, Paper } from "@mui/material";
-import { findCharacter } from "../../service/character";
+import { Box, Container, CardMedia, Card, CardActionArea, CardContent, Typography, CircularProgress, Stack, Paper } from "@mui/material";
 import { askCharacter, useCharacters, useCharactersHistory } from "../../utils/hooks";
 
 export default function Home() {
   const router = useRouter();
   const [promptInput, setPromptInput] = useState("");
-  const [result, setResult] = useState([]);
+  const [result] = useState([]);
 
   
   const {data: characters} = useCharacters();
@@ -35,8 +35,9 @@ export default function Home() {
       setPromptInput("");
     } catch(error) {
       // Consider implementing your own error handling logic here
+      // @ts-ignore
       console.error(error);
-      alert(error.message);
+      // alert(error.message);
     }
   }
 
@@ -85,7 +86,7 @@ export default function Home() {
           </Box>
         </Box>
         <Stack>
-          {history?.map(({ reply, prompt, createdAt }, idx) => <Paper sx={ { padding: 3, marginBottom: 2}} elevation={3}>
+          {history?.map(({ reply, prompt, createdAt }, idx) => <Paper key={idx} sx={ { padding: 3, marginBottom: 2}} elevation={3}>
               
             <Typography>{createdAt} {idx === 0 && <Typography sx={{ fontSize: 10 }} color="text.secondary" component="span">Latest</Typography>}</Typography>
             <Typography 
