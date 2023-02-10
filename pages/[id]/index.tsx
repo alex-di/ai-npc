@@ -2,37 +2,36 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styles from "../index.module.css";
-import characters from '../../data/chars.json';
-import { Box, Container, CardMedia, Card, CardActionArea, CardContent, Typography, CircularProgress } from "@mui/material";
+import { Box, Container, CardMedia, Card, CardActionArea, CardContent, Typography, CircularProgress, Stack, ListItem, Paper } from "@mui/material";
+import { findCharacter } from "../../service/character";
+import { askCharacter, useCharacters, useCharactersHistory } from "../../utils/hooks";
 
 export default function Home() {
   const router = useRouter();
   const [promptInput, setPromptInput] = useState("");
   const [result, setResult] = useState([]);
 
+  
+  const {data: characters} = useCharacters();
   const {id} = router.query;
+  const char = characters?.find(({ id: charId }) => charId === id);
+  
+  
+  useEffect(() => {
+    if(!id) {
+      return;
+    }
+  }, [id])
+  const {data: history = []} = useCharactersHistory({characterId: id, playerId: 'abcd12-3423'})
 
-  const history = ''
-
-  console.log(router)
+  if (!id || !char) {
+    return  <CircularProgress></CircularProgress>
+  }
 
   async function onSubmit(event) {
     event.preventDefault();
     try {
-      const response = await fetch(`/api/generate/?id=${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ prompt: promptInput }),
-      });
-
-      const data = await response.json();
-      if (response.status !== 200) {
-        throw data.error || new Error(`Request failed with status ${response.status}`);
-      }
-
-      setResult([...result, { q: promptInput, a: data.result}]);
+      askCharacter({ characterId: id, prompt: promptInput, tags: [], playerId: 'abcd12-3423' })
       setPromptInput("");
     } catch(error) {
       // Consider implementing your own error handling logic here
@@ -40,19 +39,6 @@ export default function Home() {
       alert(error.message);
     }
   }
-  
-  useEffect(() => {
-    if(!id) {
-      return;
-    }
-  }, [id])
-
-  if (!id) {
-    return  <CircularProgress></CircularProgress>
-  }
-
-  const char = characters.find(({ id: charId }) =>  charId === id);
-
 
   return (
     <>
@@ -98,6 +84,16 @@ export default function Home() {
             </>)}
           </Box>
         </Box>
+        <Stack>
+          {history?.map(({ reply, prompt, createdAt }, idx) => <Paper sx={ { padding: 3, marginBottom: 2}} elevation={3}>
+              
+            <Typography>{createdAt} {idx === 0 && <Typography sx={{ fontSize: 10 }} color="text.secondary" component="span">Latest</Typography>}</Typography>
+            <Typography 
+              variant="caption"
+            >You: {prompt}</Typography>
+            <Typography>{reply}</Typography>
+          </Paper>)}
+        </Stack>
       </Container>
     </>
   );

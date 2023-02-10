@@ -2,16 +2,16 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import styles from "./index.module.css";
-import characters from '../data/chars.json';
 import { Box, Container, CardMedia, Card, CardActionArea, CardContent, Typography } from "@mui/material";
+import { useCharacters } from "../utils/hooks";
 
 
 export default function Home() {
   const router = useRouter();
   const [promptInput, setPromptInput] = useState("");
   const [result, setResult] = useState([]);
+  const {data: characters} = useCharacters();
 
-  console.log(router)
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -49,7 +49,7 @@ export default function Home() {
       <Container className={styles.main} >
         <h3>Ask NPC</h3>
         <Box sx={{ display: 'flex' }}>
-          {characters.map((char) => <Box sx={{ flexDirection: 'row' }}>
+          {characters?.map((char) => <Box key={char.id} sx={{ flexDirection: 'row' }}>
             <Card sx={{ maxWidth: 345, margin: 5 }}>
               <CardActionArea onClick={() => router.push(`/${char.id}`)}>
                 {<CardMedia
