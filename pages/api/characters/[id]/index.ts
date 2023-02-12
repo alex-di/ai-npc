@@ -2,15 +2,22 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import joi from 'joi';
 import { BaseError } from '../../../../core/errors';
 import { reply } from '../../../../domain';
+import { MoodTag, RelationModifier } from '../../../../core/tag.inteface';
 
 const bodyValidator = joi.object<{
   prompt: string,
   playerId: string,
-  tags: string[],
+  tags: {
+    mood: MoodTag,
+    relation: RelationModifier,
+  },
 }>({
-  prompt: joi.string().required().min(10),
+  prompt: joi.string().required().min(4),
   playerId: joi.string().required(),
-  tags: joi.array().items(joi.string()).optional().default([])
+  tags: joi.object({
+    mood: joi.string().valid(...Object.values(MoodTag)),
+    relation: joi.string().valid(...Object.values(RelationModifier))
+  }).required()
 }).required()
 
 /**
@@ -48,11 +55,18 @@ const bodyValidator = joi.object<{
  *                 description: player uid to manage historical data
  *                 example: abcd12-3423
  *               tags:
- *                 type: array
+ *                 type: object
  *                 description: player uid to manage historical data
- *                 example: ['mood:angry']
- *                 items:
- *                   type: string
+ *                 properties:
+ *                   mood:
+ *                     type: string
+ *                     enum: [Anger, Worry, Excited, Happy, Scared]
+ *                     desciption: Mood modifier will be combined with recent history and context and will modify request to GPT accoding to mood map
+ *                   relation:
+ *                     type: string
+ *                     enum: [Improve, Neutral, Impair]
+ *                     description: Relation modifier to slightly update historical relation with the character
+ *                   
  *     responses: 
  *       200:
  *         content:

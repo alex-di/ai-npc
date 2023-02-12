@@ -1,0 +1,26 @@
+{
+    "basic": {
+        "setting": "player meets character in a junk yard. character's leg is stuck under a pile of metals and he is screaming for help",
+        "start": "Hey! Help me get out, I got stuck when this metal scrap fallen from the roof!",
+        "options": [
+            {
+                "mood": "Anxious",
+                "relation": "Neutral",
+                "action": null,
+                "prompt": "What's in it for me?"
+            },
+            {
+                "mood": "Anger",
+                "relation": "Impair",
+                "action": null,
+                "prompt": "I'm to weak and fragile to lift dirty metals! You will have to figure it our yourself!"
+            },
+            {
+                "mood": "Excited",
+                "relation": "Impair",
+                "action": null,
+                "prompt": "Sure! Let me see what I can do to lift these metals!"
+            }
+        ]
+    }
+}

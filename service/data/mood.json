@@ -1,0 +1,40 @@
+{
+    "Stranger": {
+        "Anger": "character is rude and tries to insult player",   
+        "Anxious": "character is jumpy and rude",
+        "Excited": "character is happy to see player, he tries to get him interested",
+        "Happy": "character is on his own mind, smiling about something and couldn't be bothered much with player's trouble",
+        "Scared": "character is terrified, having hard time to form correct sentences"
+    },
+
+    "Relative": {
+        "Anger": "character is annoyed and tries to teach player a lesson", 
+        "Anxious": "character is anxious, have a headache and would like to rest",
+        "Excited": "character is happy to see player, wants to talk about recent events and other relatives",
+        "Happy": "Happy",
+        "Scared": "Scared"
+
+    },
+    "Friend": {
+        "Anger": "character is upset and annoyed by player",
+        "Anxious": "character is jumpy and upset",
+        "Excited": "character is happy to see player, willing to catch up on latest developments",
+        "Happy": "Happy",
+        "Scared": "Scared"
+
+    },
+    "Buddy": {
+        "Anger": "character is rude and tries to make an inappropriate joke",   
+        "Anxious": "character is jumpy and upset",
+        "Excited": "chaacte seems excited and fulfilled",
+        "Happy": "Happy",
+        "Scared": "Scared"
+    },
+    "Contact": {
+        "Anger": "character makes polite suggestion for player to moderate his behaviour",   
+        "Anxious": "character seems rushed",
+        "Excited": "character seems happy with current events and topics, looking forward to go into details",
+        "Happy": "Happy",
+        "Scared": "Scared"
+    }
+}

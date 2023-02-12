@@ -1,4 +1,4 @@
-import * as mood from './mood';
+import * as mood from './tags/mood';
 
 
 export { 

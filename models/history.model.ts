@@ -7,7 +7,10 @@ const historySchema = new Schema({
   playerId: { type: String, required: true, },
   prompt:  {type: String, required: true}, // String is shorthand for {type: String}
   reply:  {type: String, required: true},
-  tags: [{ type: String }],
+  tags: {
+    mood: String,
+    relation: String,
+  },
   replyOptions: [{ type: String }],
   rawQuery:  {type: String, required: true},
 }, { timestamps: true });

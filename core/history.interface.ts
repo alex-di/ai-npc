@@ -1,4 +1,6 @@
 import { ObjectId } from "mongoose";
+import { ActionStatus, ActionTag } from "./action.interface";
+import { ITagInput } from "./tag.inteface";
 
 export interface IHistory {
   _id: ObjectId | string
@@ -6,7 +8,9 @@ export interface IHistory {
   playerId: string;
   prompt: string;
   replyOptions: string[],
-  tags: string[],
+  tags: ITagInput,
   reply: string,
   rawQuery: string,
+  action?: ActionTag,
+  actionStatus?: ActionStatus
 }
